@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>企画承認システム</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+    <h1 class="bg-primary text-white">企画承認システム</h1>
+
+    <form action="" method="POST">
+        {% csrf_token %}
+        <input type="text" name="name">
+        <input type="submit" value="作成">
+    </form>
+
+
+    <div class="row mx-0">
+        <div class="col">プラン名</div>
+        <div class="col">担当</div>
+        <div class="col">課長</div>
+        <div class="col">部長</div>
+        <div class="col">B社</div>
+    </div>
+
+    {% for plan in plans %}
+    <div class="row mx-0">
+
+        <div class="col">{{ plan.name }}</div>
+        <div class="col">
+            <form action="{% url 'planning:edit' plan.id %}" method="POST">
+                {% csrf_token %}
+                <select name="staff">
+                    <option value="未選択"  {% if plan.staff == "未選択"%}selected{% endif %}>未選択</option>
+                    <option value="承認"    {% if plan.staff == "承認"  %}selected{% endif %}>承認</option>
+                    <option value="未承認"  {% if plan.staff == "未承認"%}selected{% endif %}>未承認</option>
+                </select>
+                <input type="submit" value="送信">
+            </form>
+        </div>
+
+        <div class="col">
+            <form action="{% url 'planning:edit' plan.id %}" method="POST">
+                {% csrf_token %}
+                <select name="manager">
+                    <option value=""        {% if plan.manager == ""      %}selected{% endif %}>未選択</option>
+                    <option value="承認"    {% if plan.manager == "承認"  %}selected{% endif %}>承認</option>
+                    <option value="未承認"  {% if plan.manager == "未承認"%}selected{% endif %}>未承認</option>
+                </select>
+                <input type="submit" value="送信">
+            </form>
+        </div>
+
+        <div class="col">
+            <form action="{% url 'planning:edit' plan.id %}" method="POST">
+                {% csrf_token %}
+                <select name="director">
+                    <option value=""        {% if plan.director == ""      %}selected{% endif %}>未選択</option>
+                    <option value="承認"    {% if plan.director == "承認"  %}selected{% endif %}>承認</option>
+                    <option value="未承認"  {% if plan.director == "未承認"%}selected{% endif %}>未承認</option>
+                </select>
+                <input type="submit" value="送信">
+            </form>
+        </div>
+
+        <div class="col">
+            <form action="{% url 'planning:edit' plan.id %}" method="POST">
+                {% csrf_token %}
+                <select name="company">
+                    <option value=""        {% if plan.company == ""      %}selected{% endif %}>未選択</option>
+                    <option value="承認"    {% if plan.company == "承認"  %}selected{% endif %}>承認</option>
+                    <option value="未承認"  {% if plan.company == "未承認"%}selected{% endif %}>未承認</option>
+                </select>
+                <input type="submit" value="送信">
+            </form>
+        </div>
+    
+    </div>
+
+    {% endfor %}
+
+
+
+</body>
+</html>
+
